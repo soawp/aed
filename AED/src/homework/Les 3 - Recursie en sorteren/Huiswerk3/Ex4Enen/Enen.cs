@@ -1,10 +1,31 @@
-﻿namespace AD
+﻿using System;
+
+namespace AD
 {
     public class Opgave4
     {
         public static int Enen(int n)
         {
-            throw new System.NotImplementedException();
+            if (n < 0)
+            {
+                throw new ArgumentException("n moet ≥ 0 zijn");
+            }
+
+            if (n == 0)
+            {
+                return 0; // basisgeval
+            }
+
+            if (n % 2 == 0)
+            {
+                // n is even
+                return Enen(n / 2);
+            }
+            else
+            {
+                // n is oneven
+                return Enen(n / 2) + 1;
+            }
         }
 
         public static void Run()

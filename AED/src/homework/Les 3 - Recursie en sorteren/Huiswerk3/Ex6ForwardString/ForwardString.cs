@@ -6,12 +6,26 @@ namespace AD
     {
         public static string ForwardString(List<int> list, int from_index)
         {
-            throw new System.NotImplementedException();
+            if (from_index >= list.Count)
+            {
+                return ""; // basisgeval
+            }
+
+            // Voeg huidige element toe + recursieve aanroep voor rest
+            string rest = ForwardString(list, from_index + 1);
+            return list[from_index] + (rest == "" ? "" : " " + rest);
         }
-        
+
         public static string BackwardString(List<int> list, int from_index)
         {
-            throw new System.NotImplementedException();
+            if (from_index < 0)
+            {
+                return ""; // basisgeval
+            }
+
+            // Voeg huidige element toe + recursieve aanroep voor rest vóór
+            string rest = BackwardString(list, from_index - 1);
+            return list[from_index] + (rest == "" ? "" : " " + rest);
         }
 
         public static void Run()

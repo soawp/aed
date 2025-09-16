@@ -6,24 +6,45 @@
 
         private static long FibonacciRecursiveInternal(int n)
         {
-            calls++;
-            throw new System.NotImplementedException();
+            calls++; // count the number of times this function is called
+
+            if (n <= 0) return 0; // Fib(0) = 0
+            if (n == 1) return 1; // Fib(1) = 1
+
+            return FibonacciRecursiveInternal(n - 1) + FibonacciRecursiveInternal(n - 2);
         }
 
         public static long FibonacciRecursive(int n)
         {
-            calls = 0;
+            calls = 0; // reset call counter
             return FibonacciRecursiveInternal(n);
         }
 
         private static long FibonacciIterativeInternal(int n)
         {
-            throw new System.NotImplementedException();
+            calls++; // count the call
+
+            if (n <= 0) return 0;
+            if (n == 1) return 1;
+
+            long a = 0;
+            long b = 1;
+            long fib = 0;
+
+            for (int i = 2; i <= n; i++)
+            {
+                fib = a + b;
+                a = b;
+                b = fib;
+                calls++; // count each iteration as a call
+            }
+
+            return fib;
         }
 
         public static long FibonacciIterative(int n)
         {
-            calls = 0;
+            calls = 0; // reset call counter
             return FibonacciIterativeInternal(n);
         }
 
