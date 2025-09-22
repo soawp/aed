@@ -5,5 +5,7 @@ namespace AD
         T GetData();
         FirstChildNextSiblingNode<T> GetFirstChild();
         FirstChildNextSiblingNode<T> GetNextSibling();
+
+        string ToString();
     }
 }

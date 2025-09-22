@@ -20,17 +20,17 @@ namespace AD
         //----------------------------------------------------------------------
         public T GetData()
         {
-            throw new System.NotImplementedException();
+            return this.data;
         }
 
         public BinaryNode<T> GetLeft()
         {
-            throw new System.NotImplementedException();
+            return this.left;
         }
 
         public BinaryNode<T> GetRight()
         {
-            throw new System.NotImplementedException();
+            return this.right;
         }
     }
 }

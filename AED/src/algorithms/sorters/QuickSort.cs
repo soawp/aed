@@ -18,7 +18,6 @@ namespace AD
         {
             if (hi - lo <= CUTOFF)
             {
-                // Use insertion sort for small sublists
                 InsertionSort(list, lo, hi);
                 return;
             }
@@ -30,7 +29,7 @@ namespace AD
 
         private int Partition(List<int> list, int lo, int hi)
         {
-            int pivot = list[hi]; // Choose last element as pivot
+            int pivot = list[hi]; // Laatste element als pivot
             int i = lo - 1;
 
             for (int j = lo; j < hi; j++)

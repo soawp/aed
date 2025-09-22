@@ -1,3 +1,5 @@
+using System;
+
 namespace AD
 {
     public partial class BinaryTree<T> : IBinaryTree<T>
@@ -10,12 +12,12 @@ namespace AD
 
         public BinaryTree()
         {
-            throw new System.NotImplementedException();
+            root = null;
         }
 
         public BinaryTree(T rootItem)
         {
-            throw new System.NotImplementedException();
+            root = new BinaryNode<T>(rootItem, null, null);
         }
 
 
@@ -25,48 +27,117 @@ namespace AD
 
         public BinaryNode<T> GetRoot()
         {
-            throw new System.NotImplementedException();
+            return root;
         }
 
         public int Size()
         {
-            throw new System.NotImplementedException();
+            return Size(root);
         }
+
+        private int Size(BinaryNode<T> node)
+        {
+            if (node == null)
+                return 0;
+            return 1 + Size(node.left) + Size(node.right);
+        }
+
 
         public int Height()
         {
-            throw new System.NotImplementedException();
+            return Height(root);
+        }
+
+        private int Height(BinaryNode<T> node)
+        {
+            if (node == null)
+                return -1; // Height of an empty tree is -1.
+            return 1 + Math.Max(Height(node.left), Height(node.right));
         }
 
         public void MakeEmpty()
         {
-            throw new System.NotImplementedException();
+            root = null;
         }
 
         public bool IsEmpty()
         {
-            throw new System.NotImplementedException();
+            return root == null;
         }
 
         public void Merge(T rootItem, BinaryTree<T> t1, BinaryTree<T> t2)
         {
-            throw new System.NotImplementedException();
+            if (t1.root == t2.root && t1.root != null)
+                throw new InvalidOperationException("Cannot merge a tree with itself.");
+
+            root = new BinaryNode<T>(rootItem, t1.root, t2.root);
+
+            // Avoid memory leaks by making the merged trees empty
+            if (this != t1) t1.root = null;
+            if (this != t2) t2.root = null;
         }
 
+
+        /// <summary>
+        /// Performs a pre-order (Node, Left, Right) traversal of the tree.
+        /// </summary>
+        // ---------- PREFIX ----------
         public string ToPrefixString()
         {
-            throw new System.NotImplementedException();
+            return ToPrefixString(root).Trim();
         }
 
+        private string ToPrefixString(BinaryNode<T> node)
+        {
+            if (node == null)
+                return "NIL";
+
+            string nodeString = node.data.ToString();
+            string left = ToPrefixString(node.left);
+            string right = ToPrefixString(node.right);
+
+            // Node, Left, Right
+            return $"[ {nodeString} {left} {right} ]";
+        }
+
+        // ---------- INFIX ----------
         public string ToInfixString()
         {
-            throw new System.NotImplementedException();
+            return ToInfixString(root).Trim();
         }
 
+        private string ToInfixString(BinaryNode<T> node)
+        {
+            if (node == null)
+                return "NIL";
+
+            string left = ToInfixString(node.left);
+            string nodeString = node.data.ToString();
+            string right = ToInfixString(node.right);
+
+            // Left, Node, Right
+            return $"[ {left} {nodeString} {right} ]";
+        }
+
+        // ---------- POSTFIX ----------
         public string ToPostfixString()
         {
-            throw new System.NotImplementedException();
+            return ToPostfixString(root).Trim();
         }
+
+        private string ToPostfixString(BinaryNode<T> node)
+        {
+            if (node == null)
+                return "NIL";
+
+            string left = ToPostfixString(node.left);
+            string right = ToPostfixString(node.right);
+            string nodeString = node.data.ToString();
+
+            // Left, Right, Node
+            return $"[ {left} {right} {nodeString} ]";
+        }
+
 
 
         //----------------------------------------------------------------------
@@ -75,17 +146,54 @@ namespace AD
 
         public int NumberOfLeaves()
         {
-            throw new System.NotImplementedException();
+            return NumberOfLeaves(root);
+        }
+
+        private int NumberOfLeaves(BinaryNode<T> node)
+        {
+            if (node == null)
+                return 0;
+            if (node.left == null && node.right == null)
+                return 1;
+            return NumberOfLeaves(node.left) + NumberOfLeaves(node.right);
         }
 
         public int NumberOfNodesWithOneChild()
         {
-            throw new System.NotImplementedException();
+            return NumberOfNodesWithOneChild(root);
+        }
+
+        private int NumberOfNodesWithOneChild(BinaryNode<T> node)
+        {
+            if (node == null)
+                return 0;
+
+            int count = 0;
+            if ((node.left != null && node.right == null) || (node.left == null && node.right != null))
+            {
+                count = 1;
+            }
+
+            return count + NumberOfNodesWithOneChild(node.left) + NumberOfNodesWithOneChild(node.right);
         }
 
         public int NumberOfNodesWithTwoChildren()
         {
-            throw new System.NotImplementedException();
+            return NumberOfNodesWithTwoChildren(root);
+        }
+
+        private int NumberOfNodesWithTwoChildren(BinaryNode<T> node)
+        {
+            if (node == null)
+                return 0;
+
+            int count = 0;
+            if (node.left != null && node.right != null)
+            {
+                count = 1;
+            }
+
+            return count + NumberOfNodesWithTwoChildren(node.left) + NumberOfNodesWithTwoChildren(node.right);
         }
     }
 }
